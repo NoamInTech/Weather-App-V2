@@ -9,11 +9,10 @@ export default function App() {
       <footer>
         {" "}
         This project was coded by NoamInTech and is{" "}
-        <a
-          href="https://joyful-muffin-b2714d.netlify.app/"
-          target="_blank"
-        ></a>{" "}
-        open-sourced on GitHub.
+        <a href="" target="_blank" rel="noreferrer">
+          open-sourced on GitHub
+        </a>
+        .
       </footer>
     </div>
   );
