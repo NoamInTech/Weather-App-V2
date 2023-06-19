@@ -10,7 +10,7 @@ export default function App() {
         {" "}
         This project was coded by NoamInTech and is{" "}
         <a
-          href="https://merry-stardust-ea07c5.netlify.app/"
+          href="https://github.com/NoamInTech/weather-final-app"
           target="_blank"
           rel="noreferrer"
         >
