@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import WeatherInfo from "./WeatherInfo";
 import WeatherForecast from "./WeatherForecast";
+import GetCurrentTime from "./TimezoneAPI";
 import axios from "axios";
+
 import "./Weather.css";
 
 export default function Weather(props) {
   const [weatherData, setWeatherData] = useState({ ready: false });
   const [city, setCity] = useState(props.defaultCity);
-  function handleResponse(response) {
+  const [time, setTimeData] = useState(null);
+
+  const handleResponse = (response) => {
     console.log(response.data);
+    getAndLogCurrentTime(city);
 
     setWeatherData({
       ready: true,
@@ -20,17 +25,33 @@ export default function Weather(props) {
       wind: response.data.wind.speed,
       city: response.data.city,
     });
+  };
+
+  async function getAndLogCurrentTime(city) {
+    try {
+      const currentTimeConstant = await GetCurrentTime(city);
+      setTimeData(currentTimeConstant);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 
-  function search() {
+  useEffect(() => {
+    // When the component mounts or the default city changes, make the API call for the default city.
     const apiKey = "fe0c30430a61b3c470ofba4b5t0b59e4";
-    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
-    axios.get(apiUrl).then(handleResponse);
-  }
+    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${props.defaultCity}&key=${apiKey}&units=metric`;
+    axios.get(apiUrl).then((response) => {
+      handleResponse(response);
+    });
+  }, [props.defaultCity]);
 
   function handleSubmit(event) {
     event.preventDefault();
-    search();
+    const apiKey = "fe0c30430a61b3c470ofba4b5t0b59e4";
+    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+    axios.get(apiUrl).then((response) => {
+      handleResponse(response);
+    });
   }
 
   function handleCityChange(event) {
@@ -60,12 +81,15 @@ export default function Weather(props) {
             </div>
           </div>
         </form>
+        <p>
+          <br />
+          {time}
+        </p>
         <WeatherInfo data={weatherData} />
         <WeatherForecast city={weatherData.city} />
       </div>
     );
   } else {
-    search();
     return "Loading...";
   }
 }

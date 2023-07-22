@@ -1,30 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import WeatherForecastDay from "./WeatherForecastDay";
 import "./WeatherForecast.css";
 import axios from "axios";
 
 export default function WeatherForecast(props) {
-  let [loaded, setLoaded] = useState(false);
-  let [forecast, setForecast] = useState(null);
+  const [forecastLoaded, setForecastLoaded] = useState(false);
+  const [forecast, setForecast] = useState(null);
 
-  useEffect(() => {
-    setLoaded(false);
-  }, [props.city]);
-
-  function handleResponse(response) {
+  const handleResponse = useCallback((response) => {
     setForecast(response.data.daily);
-    setLoaded(true);
-  }
+    setForecastLoaded(true);
+  }, []);
 
-  function load() {
+  const load = useCallback(() => {
     let apiKey = "fe0c30430a61b3c470ofba4b5t0b59e4";
     let city = props.city;
     let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
 
-    axios.get(apiUrl).then(handleResponse);
-  }
+    axios
+      .get(apiUrl)
+      .then((response) => handleResponse(response))
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [props.city, handleResponse]);
 
-  if (loaded) {
+  useEffect(() => {
+    setForecastLoaded(false);
+    load();
+  }, [load]);
+
+  if (forecastLoaded) {
     return (
       <div className="WeatherForecast">
         <div className="row">
@@ -43,8 +49,6 @@ export default function WeatherForecast(props) {
       </div>
     );
   } else {
-    load();
-
     return null;
   }
 }
