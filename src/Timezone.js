@@ -1,6 +1,6 @@
-export default async function GetCurrentTime(mongroscul) {
+export default async function Timezone(now) {
   const userName = "camille_loue";
-  const geonamesURL = `http://api.geonames.org/searchJSON?q=${mongroscul}&maxRows=1&username=${userName}`;
+  const geonamesURL = `http://api.geonames.org/searchJSON?q=${now}&maxRows=1&username=${userName}`;
 
   return fetch(geonamesURL)
     .then((response) => response.json())
