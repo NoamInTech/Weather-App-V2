@@ -13,7 +13,7 @@ export default function App() {
           <a
             href="https://github.com/NoamInTech/weather-final-app"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             open-sourced on GitHub
           </a>
