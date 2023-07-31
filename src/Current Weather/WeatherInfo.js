@@ -1,6 +1,6 @@
 import React from "react";
 import WeatherIcon from "./WeatherIcon";
-import WeatherTemperature from "./WeatherTemperature";
+import TemperatureConversion from "./TemperatureConversion";
 
 export default function WeatherInfo(props) {
   console.log(props);
@@ -17,7 +17,7 @@ export default function WeatherInfo(props) {
               <WeatherIcon code={props.data.icon} size={52} />
             </div>
             <div>
-              <WeatherTemperature celsius={props.data.temperature} />
+              <TemperatureConversion celsius={props.data.temperature} />
             </div>
           </div>
         </div>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
-import WeatherForecastDay from "./WeatherForecastDay";
-import "./WeatherForecast.css";
+import ForecastDisplay from "./ForecastDisplay";
+import "./Forecast.css";
 import axios from "axios";
 
-export default function WeatherForecast(props) {
+export default function ForecastApi(props) {
   const [forecastLoaded, setForecastLoaded] = useState(false);
   const [forecast, setForecast] = useState(null);
 
@@ -38,7 +38,7 @@ export default function WeatherForecast(props) {
             if (index < 5) {
               return (
                 <div className="col" key={index}>
-                  <WeatherForecastDay data={dailyForecast} />
+                  <ForecastDisplay data={dailyForecast} />
                 </div>
               );
             } else {

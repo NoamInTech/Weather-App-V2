@@ -1,4 +1,4 @@
-.Weather {
+.WeatherApp {
   font-family: arial, sans-serif;
   border: 1px solid #dadde1;
   padding: 16px;
@@ -6,34 +6,26 @@
   color: rgb(135, 135, 135);
 }
 
-.Weather h1 {
+.WeatherApp h1 {
   font-size: 24px;
   font-weight: 100;
   line-height: 29px;
   margin: 20px 0 0 0;
 }
 
-.Weather ul {
+.WeatherApp ul {
   margin: 0;
   padding: 0;
 }
 
-.Weather li {
+.WeatherApp li {
   font-size: 16px;
   font-weight: 100;
   line-height: 19px;
   list-style: none;
 }
 
-.Weather img {
-  height: 64px;
-  width: 64px;
-  margin-bottom: 30px;
-  margin-right: 10px;
-  display: inline-block;
-}
-
-.Weather .temperature {
+.WeatherApp .temperature {
   color: rgb(33, 33, 33);
   font-size: 64px;
   line-height: 64px;
@@ -41,7 +33,7 @@
   margin-left: 10px;
 }
 
-.Weather .unit {
+.WeatherApp .unit {
   color: rgb(33, 33, 33);
   font-size: 16px;
   font-weight: 400;

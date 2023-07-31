@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
-import WeatherInfo from "./WeatherInfo";
-import WeatherForecast from "./WeatherForecast";
-import Timezone from "./Timezone";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import WeatherInfo from "./Current Weather/WeatherInfo";
+import ForecastApi from "./Forecast/ForecastApi";
+import Timezone from "./Current Weather/Timezone";
 import axios from "axios";
-
-import "./Weather.css";
+import "./WeatherApp.css";
 
 function formatDate(timeString) {
   const date = new Date(timeString);
@@ -18,25 +17,29 @@ function formatDate(timeString) {
   return date.toLocaleString("en-US", options).replace(" at", ",").trim();
 }
 
-export default function Weather(props) {
+export default function WeatherApp(props) {
   const [weatherData, setWeatherData] = useState({ ready: false });
   const [city, setCity] = useState(props.defaultCity);
   const [time, setTimeData] = useState(null);
+  const handleSubmitRef = useRef(null);
 
-  const handleResponse = (response) => {
-    console.log(response.data);
-    getAndLogCurrentTime(city);
+  const handleResponse = useCallback(
+    (response) => {
+      console.log(response.data);
+      getAndLogCurrentTime(city);
 
-    setWeatherData({
-      ready: true,
-      temperature: response.data.temperature.current,
-      humidity: response.data.temperature.humidity,
-      description: response.data.condition.description,
-      icon: response.data.condition.icon,
-      wind: response.data.wind.speed,
-      city: response.data.city,
-    });
-  };
+      setWeatherData({
+        ready: true,
+        temperature: response.data.temperature.current,
+        humidity: response.data.temperature.humidity,
+        description: response.data.condition.description,
+        icon: response.data.condition.icon,
+        wind: response.data.wind.speed,
+        city: response.data.city,
+      });
+    },
+    [city]
+  );
 
   async function getAndLogCurrentTime(city) {
     try {
@@ -47,26 +50,30 @@ export default function Weather(props) {
     }
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    const apiKey = "fe0c30430a61b3c470ofba4b5t0b59e4";
-    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
-    axios.get(apiUrl).then((response) => {
-      handleResponse(response);
-    });
-  }
+  const handleSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
+      const apiKey = "fe0c30430a61b3c470ofba4b5t0b59e4";
+      let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+      axios.get(apiUrl).then((response) => {
+        handleResponse(response);
+      });
+    },
+    [city, handleResponse]
+  );
 
-  function handleCityChange(event) {
-    setCity(event.target.value);
-  }
+  // Assign the handleSubmit function to the ref
+  useEffect(() => {
+    handleSubmitRef.current = handleSubmit;
+  }, [handleSubmit]);
 
   useEffect(() => {
     // Make the initial API call with the default city
-    handleSubmit({ preventDefault: () => {} });
+    handleSubmitRef.current({ preventDefault: () => {} });
   }, []);
 
   return (
-    <div className="Weather">
+    <div className="WeatherApp">
       <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-9">
@@ -75,7 +82,7 @@ export default function Weather(props) {
               placeholder="Enter a city..."
               className="form-control"
               autoFocus="on"
-              onChange={handleCityChange}
+              onChange={(event) => setCity(event.target.value)}
             />
           </div>
           <div className="col-3">
@@ -94,7 +101,7 @@ export default function Weather(props) {
       {weatherData.ready ? (
         <React.Fragment>
           <WeatherInfo data={weatherData} />
-          <WeatherForecast city={weatherData.city} />
+          <ForecastApi city={weatherData.city} />
         </React.Fragment>
       ) : (
         "Loading..."
