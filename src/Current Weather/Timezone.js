@@ -1,12 +1,12 @@
 export default async function Timezone(now) {
   const userName = process.env.REACT_APP_TIMEZONE_API_USERNAME;
-  const geonamesURL = `http://api.geonames.org/searchJSON?q=${now}&maxRows=1&username=${userName}`;
+  const geonamesURL = `https://secure.geonames.org/searchJSON?q=${now}&maxRows=1&username=${userName}`;
 
   return fetch(geonamesURL)
     .then((response) => response.json())
     .then((data) => {
       const { lat, lng } = data.geonames[0];
-      const timezoneURL = `http://api.geonames.org/timezoneJSON?formatted=true&lat=${lat}&lng=${lng}&username=${userName}`;
+      const timezoneURL = `https://secure.geonames.org/timezoneJSON?formatted=true&lat=${lat}&lng=${lng}&username=${userName}`;
 
       return fetch(timezoneURL);
     })
