@@ -14,7 +14,10 @@ function formatDate(timeString) {
     hour: "2-digit",
     minute: "2-digit",
   };
-  return date.toLocaleString("en-US", options).replace(" at", ",").trim();
+  return date
+    .toLocaleString("en-US", options)
+    .replace(" at", ",")
+    .trim();
 }
 
 export default function WeatherApp(props) {
@@ -53,7 +56,7 @@ export default function WeatherApp(props) {
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      const apiKey = "fe0c30430a61b3c470ofba4b5t0b59e4";
+      const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
       let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
       axios.get(apiUrl).then((response) => {
         handleResponse(response);
