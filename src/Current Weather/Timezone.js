@@ -13,6 +13,7 @@ export default async function Timezone(now) {
     .then((response) => response.json())
     .then((data) => {
       const currentTime = data.time;
+      console.log(data.time);
       return currentTime;
     })
     .catch((error) => {
