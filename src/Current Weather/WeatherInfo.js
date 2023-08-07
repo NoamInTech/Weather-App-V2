@@ -3,7 +3,6 @@ import WeatherIcon from "./WeatherIcon";
 import TemperatureConversion from "./TemperatureConversion";
 
 export default function WeatherInfo(props) {
-  console.log(props);
   return (
     <div className="WeatherInfo">
       <h1>{props.data.city}</h1>

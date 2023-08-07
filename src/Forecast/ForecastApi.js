@@ -13,7 +13,7 @@ export default function ForecastApi(props) {
   }, []);
 
   const load = useCallback(() => {
-    let apiKey = "fe0c30430a61b3c470ofba4b5t0b59e4";
+    let apiKey = process.env.REACT_APP_WEATHER_API_KEY;
     let city = props.city;
     let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
 
@@ -34,7 +34,7 @@ export default function ForecastApi(props) {
     return (
       <div className="WeatherForecast">
         <div className="row">
-          {forecast.map(function (dailyForecast, index) {
+          {forecast.map(function(dailyForecast, index) {
             if (index < 5) {
               return (
                 <div className="col" key={index}>
