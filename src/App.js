@@ -1,8 +1,9 @@
 import React from "react";
 import WeatherApp from "./WeatherApp";
-import "./App.css";
 
-export default function App() {
+import "./styles/App.css";
+
+const App = () => {
   return (
     <div className="App">
       <div className="container">
@@ -30,4 +31,6 @@ export default function App() {
       </div>
     </div>
   );
-}
+};
+
+export default App;
