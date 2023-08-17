@@ -7,6 +7,8 @@ const WeatherForecastDay = ({ data }) => {
     const date = new Date(data.time * 1000);
     const day = date.getDay();
 
+    console.log("hello");
+
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
     return days[day];
