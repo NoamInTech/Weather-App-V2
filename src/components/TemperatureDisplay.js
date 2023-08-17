@@ -4,7 +4,9 @@ const TemperatureConversion = ({ celsius }) => {
   const [unit, setUnit] = useState("celsius");
 
   const temperature =
-    unit === "celsius" ? Math.round(celsius) : Math.round((celsius * 9) / 5 + 32);
+    unit === "celsius"
+      ? Math.round(celsius)
+      : Math.round((celsius * 9) / 5 + 32);
 
   const toggleUnit = (event, targetUnit) => {
     event.preventDefault();
@@ -15,13 +17,21 @@ const TemperatureConversion = ({ celsius }) => {
     <div className="TemperatureConversion">
       <span className="temperature">{temperature}</span>
       <span className="unit">
-        <a href="/" onClick={(e) => toggleUnit(e, "celsius")}>
-          °C
-        </a>{" "}
+        {unit === "celsius" ? (
+          "°C"
+        ) : (
+          <a href="/" onClick={(e) => toggleUnit(e, "celsius")}>
+            °C
+          </a>
+        )}{" "}
         |{" "}
-        <a href="/" onClick={(e) => toggleUnit(e, "fahrenheit")}>
-          °F
-        </a>
+        {unit === "fahrenheit" ? (
+          "°F"
+        ) : (
+          <a href="/" onClick={(e) => toggleUnit(e, "fahrenheit")}>
+            °F
+          </a>
+        )}
       </span>
     </div>
   );

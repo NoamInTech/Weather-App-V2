@@ -1,11 +1,6 @@
-const maxTemperature = () => {
-  let temperature = Math.round(props.data.temperature.maximum);
+const temperaturelabel = (temp) => {
+  let temperature = Math.round(temp);
   return `${temperature}°`;
 };
 
-const minTemperature = () => {
-  let temperature = Math.round(props.data.temperature.minimum);
-  return `${temperature}°`;
-};
-
-export { maxTemperature, minTemperature };
+export { temperaturelabel };

@@ -1,13 +1,11 @@
 import React from "react";
 import WeatherIcon from "../WeatherIcon";
-import { minTemperature, maxTemperature } from "../../utils/Temperature";
+import { temperaturelabel } from "../../utils/Temperature";
 
 const WeatherForecastDay = ({ data }) => {
   const getDayOfWeek = () => {
     const date = new Date(data.time * 1000);
     const day = date.getDay();
-
-    console.log("hello");
 
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -20,10 +18,10 @@ const WeatherForecastDay = ({ data }) => {
       <WeatherIcon code={data.condition.icon} size={36} />
       <div className="WeatherForecast-temperatures">
         <span className="WeatherForecast-temperature-max">
-          {maxTemperature()}
+          {temperaturelabel(data.temperature.maximum)}
         </span>
         <span className="WeatherForecast-temperature-min">
-          {minTemperature()}
+          {temperaturelabel(data.temperature.minimum)}
         </span>
       </div>
     </div>
