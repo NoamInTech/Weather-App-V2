@@ -1,17 +1,8 @@
 import React from "react";
 import WeatherIcon from "../WeatherIcon";
+import { minTemperature, maxTemperature } from "../../utils/Temperature";
 
 const WeatherForecastDay = ({ data }) => {
-  const maxTemperature = () => {
-    const temperature = Math.round(data.temperature.maximum);
-    return `${temperature}°`;
-  };
-
-  const minTemperature = () => {
-    const temperature = Math.round(data.temperature.minimum);
-    return `${temperature}°`;
-  };
-
   const getDayOfWeek = () => {
     const date = new Date(data.time * 1000);
     const day = date.getDay();
